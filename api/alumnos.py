@@ -29,7 +29,7 @@ def obtener_uno(dominio):
 		except dns.exception.DNSException as ex:
 			Error = {}
 			Error["error"] = "domain not found"
-			return Error
+			return make_response(Error, 404)
 		for answer in result.response.answer:
 			ipNueva = {}
 			ipNueva['ip'] = str(answer[0])	
