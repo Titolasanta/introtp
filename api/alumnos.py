@@ -1,6 +1,6 @@
 from flask import abort, make_response
-import dns.resolver
-
+import dns.resolver as resolver
+import dns.exception
 # Data to serve with our API
 dominios = {
     "1": {
@@ -23,17 +23,21 @@ def obtener_todos(q = ''):
 
 def obtener_uno(dominio):
 
-    if dominio not in dominios:
-        result = dns.resolver.query(dominio)
-        for answer in result.response.answer:
-            ipNueva = {}
-            ipNueva['ip'] = str(answer[0])	
-            ipNueva['domain'] = dominio	
-            ipNueva['custom'] = 'false'	
-            return ipNueva
-        return abort(404, 'No Implementado')
-
-    return dominios.get(dominio)
+	if dominio not in dominios:
+		try:
+			result = resolver.query(dominio)
+		except dns.exception.DNSException as ex:
+			Error = {}
+			Error["error"] = "domain not found"
+			return Error
+		for answer in result.response.answer:
+			ipNueva = {}
+			ipNueva['ip'] = str(answer[0])	
+			ipNueva['domain'] = dominio	
+			ipNueva['custom'] = 'false'	
+			return ipNueva
+		return abort(404, 'No Implementado')
+	return dominios.get(dominio)
 
 
 

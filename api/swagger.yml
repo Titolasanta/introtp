@@ -70,7 +70,10 @@ paths:
                 $ref: '#/components/schemas/Alumno'
         400:
           description: "Domain duplicado"
+
+
   /alumnos/{dominio}:
+
     get:
       operationId: "api.alumnos.obtener_uno"
       tags:
@@ -92,7 +95,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/Alumno'
         404:
-          description: "Alumno no encontrado"
+          description: "Operación de lectura exitosa"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+
     delete:
       operationId: "api.alumnos.borrar"
       tags:
@@ -137,7 +146,5 @@ components:
     Error:
       type: "object"
       properties:
-        codigo:
-          type: "number"
         mensaje:
           type: "string"
