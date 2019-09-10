@@ -38,7 +38,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/InputDomain'
+              $ref: '#/components/schemas/InputPost'
       responses:
         201:
           description: "Se creo el domino correctamente"
@@ -143,6 +143,13 @@ components:
           type: "string"
         custom:
           type: "boolean"
+    InputPost:
+      type: "object"
+      properties:
+        domain: 
+          type: "string"
+        ip: 
+          type: "string"
     Error:
       type: "object"
       properties:

@@ -57,7 +57,9 @@ def crear(**kwargs):
         if dup: break
 
     if dup:
-        return abort(400, 'El domain ya existe')
+        Error = {}
+        Error["error"] = 'custom domain already exists'
+        return make_response(Error, 400)
 
     dominios[domain] = ipNueva
 
