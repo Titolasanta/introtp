@@ -48,28 +48,7 @@ paths:
                 $ref: '#/components/schemas/Alumno'
         400:
           description: "domino duplicado"
-    put:
-      operationId: "api.alumnos.put"
-      tags:
-        - "Alumnos"
-      summary: "Alta de un alumno de la materia"
-      description: "Cambia una ip de un domain custom ya existente"
-      requestBody:
-        required: true
-        x-body-name: 'alumno'
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/InputDomain'
-      responses:
-        201:
-          description: "Se creo el alumno correctamente"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Alumno'
-        400:
-          description: "Domain duplicado"
+    
 
 
   /alumnos/{dominio}:

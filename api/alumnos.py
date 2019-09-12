@@ -74,24 +74,3 @@ def borrar(id_alumno):
     return make_response('', 204)
 
 
-
-def put(**kwargs):
-
-    ipNueva = kwargs.get('body')
-    ip = ipNueva.get('ip')
-    domain = ipNueva.get('domain')
-
-    if not ip or not domain:
-        return abort(400, 'Faltan datos para alterar una ip')
-
-    dup = False
-    for alumno_existente in dominios.values():
-        dup = domain == alumno_existente.get('domain')
-        if dup: break
-
-    if dup == False:
-        return abort(400, 'El domain no existe')
-
-    dominios[domain]['ip'] = ip
-
-    return make_response(ipNueva, 201)
