@@ -14,10 +14,6 @@ dominios = {
 real_dominios = {}
 
 def obtener_uno(dominio):
-
-	if(not (dominio[0:3] == "www.") ):
-		dominio = "www." + dominio
-
 	if dominio not in dominios:
 		try:
 			result = dns.resolver.query(dominio)
@@ -26,11 +22,16 @@ def obtener_uno(dominio):
 			Error["error"] = "domain not found"
 			return make_response(Error, 404)
 		if dominio not in real_dominios:
-			real_dominios[dominio] = 0
-		i = real_dominios[dominio]
-		i = (i+1) % len(result.response.answer[1])
-		real_dominios[dominio] = i
-		answer = result.response.answer[1][i]	
+			dominioNuevo = {}
+			dominioNuevo['pos'] = 0
+			dominioNuevo['response'] = result.rrset.to_rdataset()
+			real_dominios[dominio] = dominioNuevo
+		if real_dominios[dominio]['response'] != result.rrset.to_rdataset():
+			real_dominios[dominio]['response'] = result.rrset.to_rdataset()
+		i = real_dominios[dominio]['pos']
+		i = (i+1) % len(real_dominios[dominio]['response'])
+		real_dominios[dominio]['pos'] = i
+		answer = real_dominios[dominio]['response'][i]	
 		ipNueva = {}
 		ipNueva['ip'] = str(answer)	
 		ipNueva['domain'] = dominio	
