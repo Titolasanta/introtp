@@ -10,54 +10,12 @@ servers:
 
 # Paths servidos por la aplicación
 paths:
-  /alumnos:
-    get:
-      operationId: "api.alumnos.obtener_todos"
-      tags:
-        - "Alumnos"
-      summary: "Colección de dominios custom"
-      description: "Obtiene la lista de todos los domain custom Guardados"
-      responses:
-        200:
-          description: "Operación de lectura exitosa"
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Alumno'
-
-
-
-  /alumnos/{dominio}:
-
-    delete:
-      operationId: "api.alumnos.borrar"
-      tags:
-        - "Alumnos"
-      summary: "Borrar alumno de la materia"
-      description: "Borra un alumno de la materia"
-      parameters:
-        - in: path
-          name: dominio
-          required: true
-          schema:
-            type: string
-          description: El domain a borrar
-      responses:
-        204:
-          description: "Operación de lectura exitosa"
-        404:
-          description: "Domain no encontrado"
-
-
-
   /custom-domain:
     put:
       operationId: "api.custom-domain.put"
       tags:
         - "custom-domain"
-      summary: "Alta de un alumno de la materia"
+      summary: "Alta de un alumno"
       description: "Cambia una ip de un domain custom ya existente"
       requestBody:
         required: true
@@ -79,7 +37,7 @@ paths:
       operationId: "api.custom-domain.crear"
       tags:
         - "custom-domain"
-      summary: "Alta de un domino de la materia"
+      summary: "Alta de un domino"
       description: "Crea un nuevo domino y lo agrega a la lista de domino custom"
       requestBody:
         required: true
@@ -127,6 +85,48 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
+
+  /custom-domain/{dominio}:
+    delete:
+      operationId: "api.custom-domain.borrar"
+      tags:
+        - "custom-domain"
+      summary: "Borrar dominio"
+      description: "Borra un dominio"
+      parameters:
+        - in: path
+          name: dominio
+          required: true
+          schema:
+            type: string
+          description: El dominio a borrar
+      responses:
+        204:
+          description: "Operación de lectura exitosa"
+        404:
+          description: "Domain no encontrado"
+
+  /custom-domain/{q}:
+    get:
+      operationId: "api.custom-domain.obtener_todos"
+      tags:
+        - "custom-domain"
+      summary: "Buscar dominios custom"
+      description: "Buscar dominios custom"
+      parameters:
+        - in: path
+          name: q
+          required: false
+          schema:
+            type: string
+          description: El texto a buscar
+      responses:
+        201:
+          description: "Se obtienen dominios"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Alumno'
 
 
 # Declaración de tipos de datos

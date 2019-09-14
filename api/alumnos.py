@@ -50,11 +50,11 @@ def crear(**kwargs):
 
 
 
-def borrar(id_alumno):
-    if id_alumno not in dominios:
-        return abort(404, 'El alumno no fue encontrado')
+def borrar(dominio):
+    if dominio not in dominios:
+        return abort(404, 'El dominio no fue encontrado')
 
-    del dominios[id_alumno]
+    del dominios[dominio]
 
     return make_response('', 204)
 

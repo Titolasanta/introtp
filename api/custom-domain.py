@@ -87,4 +87,26 @@ def crear(**kwargs):
 
     return make_response(ipNueva, 201)
 
+def borrar(dominio):
+    if dominio not in dominios:
+        return abort(404, 'El dominio no fue encontrado')
+
+    del dominios[dominio]
+
+    respuesta = {}
+    respuesta['dominio'] = dominio
+
+    return make_response(respuesta, 200)
+
+def obtener_todos(q = ''):
+    if q == '{q}':
+        return sorted(dominios.values(), key=lambda alumno: alumno.get('domain'))
+
+    return list(filter(lambda val: val.get('domain').find(q) != -1, dominios.values() ))
+
+
+
+
+
+
 
