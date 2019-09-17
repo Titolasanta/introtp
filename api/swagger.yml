@@ -23,7 +23,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/InputDomain'
+              $ref: '#/components/schemas/InputPost'
       responses:
         201:
           description: "Se creo el alumno correctamente"
@@ -32,7 +32,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/Alumno'
         400:
-          description: "Domain duplicado"
+          description: "payload is invalid"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404: 
+          description: "domain not found"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
     post:
       operationId: "api.custom-domain.crear"
       tags:
@@ -54,7 +64,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/Alumno'
         400:
-          description: "domino duplicado"
+          description: "Dominio duplicado"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
   /domains/{dominio}:
 
@@ -101,10 +115,14 @@ paths:
             type: string
           description: El dominio a borrar
       responses:
-        204:
-          description: "Operación de lectura exitosa"
+        200:
+          description: "Operación de borrado exitoso"
         404:
           description: "Domain no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
   /custom-domain/{q}:
     get:
@@ -162,3 +180,4 @@ components:
       properties:
         mensaje:
           type: "string"
+

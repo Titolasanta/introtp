@@ -6,7 +6,7 @@ import dns.exception
 dominios = {
 	"1": {
 		'ip': 1,
-        	'domain': '1',
+        'domain': '121',
 		'custom': 'true'
 	},
 }
@@ -38,7 +38,7 @@ def obtener_uno(dominio):
 		ipNueva['custom'] = 'false'
 		return ipNueva
 
-	return custom-domain.dominios.get(dominio)
+	return dominios.get(dominio)
 
 
 def put(**kwargs):
@@ -51,18 +51,22 @@ def put(**kwargs):
 		Error["error"] = "payload is invalid"
 		return make_response(Error,400)
 	
-	notDup = False
-	for alumno_existente in dominios.values():
-		notDup = domain == alumno_existente.get('domain')
-		if not notDup: break
+	Dup = False
+
+	for key in dominios:
+		Dup = domain == dominios[key]['domain']
+		print(dominios)
+		print(dominios[key].get('domain'))
+		if Dup: break
 		
-		if notDup == False:
-			Error = {}
-			Error["error"] = "domain not found"
-			return make_response(Error,404)
-		dominios[domain]['ip'] = ip
-		ipNueva = dominios[domain]
-		return make_response(ipNueva, 201)
+	if Dup == False:
+		Error = {}
+		Error["error"] = "domain not found"
+		return make_response(Error,404)
+
+	dominios[domain]['ip'] = ip
+	ipNueva = dominios[domain]
+	return make_response(ipNueva, 201)
 
 
 def crear(**kwargs):
@@ -85,7 +89,6 @@ def crear(**kwargs):
         return make_response(Error, 400)
 
     dominios[domain] = ipNueva
-
     return make_response(ipNueva, 201)
 
 def borrar(dominio):
@@ -100,10 +103,11 @@ def borrar(dominio):
     return make_response(respuesta, 200)
 
 def obtener_todos(q = ''):
-    if q == '{q}':
-        return sorted(dominios.values(), key=lambda alumno: alumno.get('domain'))
-
-    return list(filter(lambda val: val.get('domain').find(q) != -1, dominios.values() ))
+    print(q)
+    if q != '{q}':
+        return list(filter(lambda val: val.get('domain').find(q) != -1, dominios.values() ))
+    return sorted(dominios.values(), key=lambda alumno: alumno.get('domain'))
+    
 
 
 
