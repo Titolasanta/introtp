@@ -103,8 +103,7 @@ def borrar(dominio):
     return make_response(respuesta, 200)
 
 def obtener_todos(q = ''):
-    print(q)
-    if q != '{q}':
+    if q != '{q}' and q != ',' and q !='' :
         return list(filter(lambda val: val.get('domain').find(q) != -1, dominios.values() ))
     return sorted(dominios.values(), key=lambda alumno: alumno.get('domain'))
     
